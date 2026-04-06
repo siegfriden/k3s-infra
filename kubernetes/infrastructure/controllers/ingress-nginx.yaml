@@ -27,6 +27,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
+        namespace: flux-system
   values:
     controller:
       kind: DaemonSet
@@ -34,3 +35,5 @@ spec:
         enabled: true
       service:
         type: ClusterIP
+      extraArgs:
+        default-ssl-certificate: "cert-manager/wildcard-tls"
