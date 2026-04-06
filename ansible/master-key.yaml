@@ -10,14 +10,12 @@
 
     - name: Apply sealed secrets key
       ansible.builtin.shell: |
-        k3s kubectl create namespace flux-system --dry-run=client -o yaml | k3s kubectl apply -f -
-
         cat <<EOF | k3s kubectl apply -f -
         apiVersion: v1
         kind: Secret
         metadata:
           name: master-key
-          namespace: flux-system
+          namespace: kube-system
           labels:
             sealedsecrets.bitnami.com/sealed-secrets-key: "active"
         type: kubernetes.io/tls
