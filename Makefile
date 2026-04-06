@@ -13,7 +13,15 @@ users:
 forget:
 	ssh-keygen -R $(SERVER_HOST)
 
-kubeconfig:
+tunnel:
+	ssh -L 6443:localhost:6443 $(SERVER_USER)@$(SERVER_HOST)
+
+bootstrap:
 	scp $(SERVER_USER)@$(SERVER_HOST):/etc/rancher/k3s/k3s.yaml ./kubeconfig
-	sed -i '' 's/127.0.0.1/$(SERVER_HOST)/' kubeconfig
-	@echo "export KUBECONFIG=$$(pwd)/kubeconfig"
+	flux bootstrap github \
+		--kubeconfig=./kubeconfig \
+		--owner=siegfriden \
+		--repository=k3s-infra \
+		--branch=main \
+		--path=kubernetes \
+		--personal
