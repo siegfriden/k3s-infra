@@ -60,8 +60,14 @@ spec:
               target_label  = "container"
             }
             rule {
-              source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
-              target_label  = "app"
+              source_labels = [
+                "__meta_kubernetes_pod_label_app_kubernetes_io_name",
+                "__meta_kubernetes_pod_label_app",
+                "__meta_kubernetes_pod_label_k8s_app",
+              ]
+              regex        = "^(?:;*)?([^;]+).*$"
+              replacement  = "$1"
+              target_label = "service"
             }
             rule {
               source_labels = ["__meta_kubernetes_node_name"]
