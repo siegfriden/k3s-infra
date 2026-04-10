@@ -1,6 +1,8 @@
 -include .env
 export
 
+.PHONY: provision update-config master-key users forget tunnel kubeconfig bootstrap
+
 provision:
 	ansible-playbook -i "$(SERVER_HOST)," -u root ansible/provision.yaml
 
@@ -22,8 +24,7 @@ tunnel:
 kubeconfig:
 	scp $(SERVER_USER)@$(SERVER_HOST):/etc/rancher/k3s/k3s.yaml ./kubeconfig
 
-bootstrap:
-	@make kubeconfig
+bootstrap: kubeconfig
 	GITHUB_TOKEN=$(GITHUB_PAT) flux bootstrap github \
 		--kubeconfig=./kubeconfig \
 		--owner=siegfriden \
@@ -31,3 +32,4 @@ bootstrap:
 		--branch=main \
 		--path=kubernetes \
 		--personal
+
