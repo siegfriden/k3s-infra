@@ -22,14 +22,28 @@ spec:
           - resources:
               names:
                 - kube-system
-                - flux-system
-                - kyverno
                 - kube-public
                 - kube-node-lease
+                - flux-system
+                - cert-manager
+                - monitoring
+                - kyverno
       mutate:
         targets:
           - apiVersion: v1
             kind: Namespace
+            preconditions:
+              all:
+                - key: "{{ target.metadata.name }}"
+                  operator: AnyNotIn
+                  value:
+                    - kube-system
+                    - kube-public
+                    - kube-node-lease
+                    - flux-system
+                    - cert-manager
+                    - monitoring
+                    - kyverno
         patchStrategicMerge:
           metadata:
             labels:
@@ -48,10 +62,12 @@ spec:
           - resources:
               names:
                 - kube-system
-                - flux-system
-                - kyverno
                 - kube-public
                 - kube-node-lease
+                - flux-system
+                - cert-manager
+                - monitoring
+                - kyverno
       validate:
         message: "PSA restricted labels cannot be removed or weakened. This namespace must follow cluster-wide security governance."
         pattern:
