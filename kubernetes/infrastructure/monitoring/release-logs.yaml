@@ -128,6 +128,9 @@ spec:
         delete_request_store: filesystem
       limits_config:
         retention_period: 168h
+        max_query_parallelism: 2
+        ingestion_rate_mb: 4
+        ingestion_burst_size_mb: 8
       schemaConfig:
         configs:
           - from: "2024-04-01"
@@ -137,12 +140,21 @@ spec:
             index:
               prefix: index_
               period: 24h
-
+      ingester:
+        chunk_encoding: snappy
+      querier:
+        max_concurrent: 4
     singleBinary:
       replicas: 1
       persistence:
         enabled: true
         size: 10Gi
+      resources:
+        requests:
+          cpu: 50m
+          memory: 256Mi
+        limits:
+          memory: 512Mi
 
     # Disable microservice components (not used in SingleBinary mode)
     backend:
@@ -151,6 +163,19 @@ spec:
       replicas: 0
     write:
       replicas: 0
+
+    # Disable components unnecessary for a small single-user cluster
+    chunksCache:
+      enabled: false
+    resultsCache:
+      enabled: false
+    lokiCanary:
+      enabled: false
+    gateway:
+      enabled: false
+    sidecar:
+      rules:
+        enabled: false
 
     # Disable bundled Grafana and Prometheus (already running)
     grafana:
