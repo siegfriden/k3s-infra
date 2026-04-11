@@ -12,7 +12,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: linkerd-crds
-  namespace: flux-system
+  namespace: linkerd
 spec:
   interval: 30m
   targetNamespace: linkerd
@@ -36,7 +36,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: linkerd-control-plane
-  namespace: flux-system
+  namespace: linkerd
 spec:
   dependsOn:
     - name: linkerd-crds
@@ -64,12 +64,10 @@ spec:
   valuesFrom:
     - kind: Secret
       name: linkerd-trust-anchor
-      namespace: linkerd
       valuesKey: ca.crt
       targetPath: identityTrustAnchorsPEM
     - kind: Secret
       name: linkerd-trust-anchor
-      namespace: linkerd
       valuesKey: ca.crt
       targetPath: identity.issuer.caBundle
 
@@ -78,7 +76,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: linkerd-viz
-  namespace: flux-system
+  namespace: linkerd
 spec:
   dependsOn:
     - name: linkerd-control-plane
