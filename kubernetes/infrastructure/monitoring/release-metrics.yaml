@@ -46,6 +46,9 @@ spec:
           url: http://loki.monitoring.svc.cluster.local:3100
           access: proxy
           isDefault: false
+      sidecar:
+        dashboards:
+          enabled: true
       dashboards:
         default:
           linkerd-top-line:
