@@ -50,21 +50,55 @@ spec:
         default:
           linkerd-top-line:
             gnetId: 15474
+            revision: 4
             datasource: Prometheus
           linkerd-health:
             gnetId: 15486
+            revision: 3
             datasource: Prometheus
-          linkerd-deployment:
-            gnetId: 15475
-            datasource: Prometheus
-          linkerd-pod:
-            gnetId: 15477
-            datasource: Prometheus
-          linkerd-service:
-            gnetId: 15480
+          linkerd-kubernetes:
+            gnetId: 15479
+            revision: 2
             datasource: Prometheus
           linkerd-namespace:
             gnetId: 15478
+            revision: 3
+            datasource: Prometheus
+          linkerd-deployment:
+            gnetId: 15475
+            revision: 7
+            datasource: Prometheus
+          linkerd-statefulset:
+            gnetId: 15493
+            revision: 3
+            datasource: Prometheus
+          linkerd-daemonset:
+            gnetId: 15484
+            revision: 3
+            datasource: Prometheus
+          linkerd-cronjob:
+            gnetId: 15483
+            revision: 3
+            datasource: Prometheus
+          linkerd-job:
+            gnetId: 15487
+            revision: 3
+            datasource: Prometheus
+          linkerd-pod:
+            gnetId: 15477
+            revision: 3
+            datasource: Prometheus
+          linkerd-service:
+            gnetId: 15480
+            revision: 3
+            datasource: Prometheus
+          linkerd-route:
+            gnetId: 15481
+            revision: 3
+            datasource: Prometheus
+          linkerd-authority:
+            gnetId: 15482
+            revision: 3
             datasource: Prometheus
     prometheus:
       prometheusSpec:
@@ -135,7 +169,8 @@ spec:
               - source_labels: [__meta_kubernetes_pod_name]
                 action: replace
                 target_label: pod
-              - source_labels: [__meta_kubernetes_pod_label_linkerd_io_proxy_job]
+              - source_labels:
+                  [__meta_kubernetes_pod_label_linkerd_io_proxy_job]
                 action: replace
                 target_label: k8s_job
               - action: labeldrop
