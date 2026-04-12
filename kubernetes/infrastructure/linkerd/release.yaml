@@ -61,15 +61,6 @@ spec:
       externalCA: true
       issuer:
         scheme: kubernetes.io/tls
-  valuesFrom:
-    - kind: Secret
-      name: linkerd-trust-anchor
-      valuesKey: ca.crt
-      targetPath: identityTrustAnchorsPEM
-    - kind: Secret
-      name: linkerd-trust-anchor
-      valuesKey: ca.crt
-      targetPath: identity.issuer.caBundle
 
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
