@@ -39,6 +39,18 @@ spec:
         passwordKey: admin-password
       ingress:
         enabled: false
+      extraInitContainers:
+        - name: fix-permissions
+          image: busybox
+          command:
+            [
+              "sh",
+              "-c",
+              "mkdir -p /var/lib/grafana/dashboards/default && chown -R 472:472 /var/lib/grafana",
+            ]
+          volumeMounts:
+            - name: storage
+              mountPath: /var/lib/grafana
       additionalDataSources:
         - name: Loki
           type: loki
@@ -46,14 +58,6 @@ spec:
           url: http://loki.monitoring.svc.cluster.local:3100
           access: proxy
           isDefault: false
-        - name: DS_LOKI
-          type: loki
-          url: http://loki.monitoring.svc.cluster.local:3100
-          access: proxy
-        - name: DS_PROMETHEUS
-          type: prometheus
-          url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
-          access: proxy
       sidecar:
         dashboards:
           enabled: true
