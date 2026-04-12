@@ -39,18 +39,6 @@ spec:
         passwordKey: admin-password
       ingress:
         enabled: false
-      extraInitContainers:
-        - name: fix-permissions
-          image: busybox
-          command:
-            [
-              "sh",
-              "-c",
-              "mkdir -p /var/lib/grafana/dashboards/default && chown -R 472:472 /var/lib/grafana",
-            ]
-          volumeMounts:
-            - name: storage
-              mountPath: /var/lib/grafana
       additionalDataSources:
         - name: Loki
           type: loki
@@ -68,6 +56,18 @@ spec:
           enabled: true
           searchNamespace: ALL
           label: grafana_datasource
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+            - name: default
+              orgId: 1
+              folder: ""
+              type: file
+              disableDeletion: false
+              editable: true
+              options:
+                path: /var/lib/grafana/dashboards
       dashboards:
         default:
           linkerd-top-line:
