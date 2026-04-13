@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - deployment.yaml
+  - deployment-v2.yaml
   - service.yaml
+  - service-v2.yaml
   - httproute.yaml
-  - networkpolicy.yaml

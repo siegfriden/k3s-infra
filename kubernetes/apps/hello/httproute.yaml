@@ -18,3 +18,7 @@ spec:
       backendRefs:
         - name: hello
           port: 80
+          weight: 90
+        - name: hello-v2
+          port: 80
+          weight: 10
