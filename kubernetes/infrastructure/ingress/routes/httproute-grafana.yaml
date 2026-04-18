@@ -6,7 +6,7 @@ metadata:
 spec:
   parentRefs:
     - name: main-gateway
-      namespace: envoy-gateway-system
+      namespace: gateway
       sectionName: https
   hostnames:
     - grafana.siegfrid.com

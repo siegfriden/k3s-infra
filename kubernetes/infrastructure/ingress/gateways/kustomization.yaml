@@ -4,3 +4,4 @@ resources:
   - certificate.yaml
   - gateway-class.yaml
   - gateway.yaml
+  - namespace.yaml
