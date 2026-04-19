@@ -30,7 +30,7 @@ kubeconfig:
 bootstrap: kubeconfig
 	GITHUB_TOKEN=$(GITHUB_PAT) flux bootstrap github \
 		--kubeconfig=./kubeconfig \
-		--owner=siegfriden \
+		--owner=nathansiegfrid \
 		--repository=k8s-infra \
 		--branch=main \
 		--path=kubernetes \

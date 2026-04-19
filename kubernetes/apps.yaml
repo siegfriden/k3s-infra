@@ -8,7 +8,7 @@ spec:
   interval: 1m0s
   ref:
     branch: main
-  url: https://github.com/siegfriden/k8s-apps
+  url: https://github.com/nathansiegfrid/k8s-apps
 
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
