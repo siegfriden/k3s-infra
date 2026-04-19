@@ -17,7 +17,10 @@ spec:
       port: 80
       allowedRoutes:
         namespaces:
-          from: All
+          from: Selector
+          selector:
+            matchLabels:
+              gateway.k8s.local/route-attach: "true"
 
 ---
 apiVersion: gateway.networking.k8s.io/v1
